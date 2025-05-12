@@ -1,2 +1,2 @@
-# iPTV-Scanner
-A free iPTV Scanner to check for your dead or alive links.
+# Scanner
+A free Scanner to check m3u links.
