@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
             scanIndicator.textContent = "Status: Scanning (0%)";
             await checkChannels(parseM3U(playlistContent));
             if (!controller.signal.aborted) {
-                scanIndicator.textContent = "Status: Download Ready";
+                scanIndicator.textContent = "Status: Preuzimanje spremno";
                 downloadButton.disabled = false; // Enable the download button
                 clearButton.disabled = false;
                 checkButton.disabled = false;
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fileInput.value = "";
         urlInput.value = "";
         activeChannels = [];
-        scanIndicator.textContent = "Status: Ready / Waiting for file...";
+        scanIndicator.textContent = "Status: Spremno / Čekam datoteku...";
         downloadButton.disabled = true; // Disable the download button
         // Create a new AbortController for future requests
         controller = new AbortController();
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return await response.text();
         } catch (error) {
             if (error.name === 'AbortError') {
-                scanIndicator.textContent = "Status: Scan aborted.";
+                scanIndicator.textContent = "Status: Provjera prekinuta.";
             } else {
                 scanIndicator.textContent = "Error: fetching the M3U file. Please check the URL and try again.";
                 console.error(error);
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lines.forEach((line) => {
             if (line.startsWith("#EXTINF")) {
                 const nameMatch = line.match(/,(.*)$/);
-                channelInfo.name = nameMatch ? nameMatch[1] : "Unknown Channel";
+                channelInfo.name = nameMatch ? nameMatch[1] : "Nepoznati kanali";
             } else if (line.startsWith("http")) {
                 channelInfo.url = line.trim();
                 channels.push({ ...channelInfo });
