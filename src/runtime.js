@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return { online: response.ok, code: response.status };
         } catch (error) {
             if (error.name === 'AbortError') {
-                return { online: false, code: "Aborted" };
+                return { online: false, code: "Prekinuto" };
             }
             return { online: false, code: "Network Error" };
         }
