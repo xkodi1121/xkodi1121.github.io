@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (fileInput.files.length > 0) {
             playlistContent = await readM3UFile(fileInput.files[0]);
         } else {
-            scanIndicator.textContent = "Error: No Playlist Detected, Try again";
+            scanIndicator.textContent = "Greška: Nema playliste, Pokušaj ponovo";
             
             return;
         }
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (playlistContent) {
             const channels = parseM3U(playlistContent);
             totalChannels = channels.length;
-            scanIndicator.textContent = "Status: Scanning (0%)";
+            scanIndicator.textContent = "Status: Pretražujem (0%)";
             await checkChannels(parseM3U(playlistContent));
             if (!controller.signal.aborted) {
                 scanIndicator.textContent = "Status: Preuzimanje spremno";
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     downloadButton.addEventListener("click", (event) => {
         if (activeChannels.length === 0) {
-            scanIndicator.textContent= "Error: No active channels to download. Please run a check first.";
+            scanIndicator.textContent= "Error: Nema aktivnih kanala za preuzimanje. Klikni prvo provjeru.";
             return;
         }
         downloadActiveChannels();
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (error.name === 'AbortError') {
                 scanIndicator.textContent = "Status: Provjera prekinuta.";
             } else {
-                scanIndicator.textContent = "Error: fetching the M3U file. Please check the URL and try again.";
+                scanIndicator.textContent = "Greška: dohvaćanje M3U datoteke. Provjeri URL i pokušaj ponovo.";
                 console.error(error);
             }
             return "";
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const reader = new FileReader();
             reader.onload = (event) => resolve(event.target.result);
             reader.onerror = (error) => {
-                scanIndicator.textContent="Error: reading the file. Please try again.";
+                scanIndicator.textContent="Greška: čitanje datoteke. Pokušaj ponovo.";
                 console.error(error);
                 reject("");
             };
@@ -140,11 +140,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const percentage = Math.round(((index + 1) / totalChannels) * 100);
-            scanIndicator.textContent = `Status: Scanning (${percentage}%)`;
+            scanIndicator.textContent = `Status: Pretražujem (${percentage}%)`;
 
             // Check if the scan was aborted
             if (controller.signal.aborted) {
-                scanIndicator.textContent = "Status: Scan aborted.";
+                scanIndicator.textContent = "Status: Pretraga prekinuta.";
                 downloadButton.disabled = true; 
                 break;
             }
